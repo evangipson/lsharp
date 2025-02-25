@@ -1,10 +1,3 @@
-# Standard Library
-
-## General
-The standard library is intended to be the minimum set of types and members required by a conforming L# implementation. As such, it contains only those members that are explicitly required by the L# language specification.
-
-## Standard Library Types
-```lsharp
 /* declaring and assigning the text type */
 text phrase = "Hello, world!"
 
@@ -31,14 +24,13 @@ contract shape
     number area()
 
 /* defining an implementation of a contract */
-shape square
+square is shape
     /* defining what happens when assigning to a user type */
     square(number a, number b)
         width = a
         height = b
-        id = "Square with `a` width and `b` height"
+        id = 'Square with `a` width and `b` height'
 
     /* defining an implementation of a function from the contract */
     number area()
         return width * height
-```
