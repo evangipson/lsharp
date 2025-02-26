@@ -14,43 +14,33 @@ If you're curious, you can read more about it in the [L# language spec](spec) in
 Here is a sample of a very simple L# file:
 
 ```lsharp
-/* declaring and assigning the text type */
-text phrase = "Hello, world!"
+grab io
 
-/* declaring and assigning a collection of text types */
-texts phrases = [ "Hello", "world!" ]
+/* A normal logging function */
+io.log('A normal call to io.log from L#.')
 
-/* declaring and assigning the number type */
+/* Full suite of named log functions */
+io.debug('A normal call to io.debug from L#.')
+io.information('A normal call to io.information from L#.')
+io.warning('A normal call to io.warning from L#.')
+io.error('A normal call to io.error from L#.')
+
+/* Full suite of log functions with severity specified */
+io.log('A call to io.log with "debug" severity from L#.', 1)
+io.log('A call to io.log with "information" severity from L#.', 2)
+io.log('A call to io.log with "warning" severity from L#.', 3)
+io.log('A call to io.log with "error" severity from L#.', 4)
+
+/* declaring and assiging the number type */
 number temperature = 98.4
 
-/* declaring and assigning a collection of number types */
-numbers temperatures = [ 97, 98.4, 100.001 ]
-
-/* declaring and assigning the bit type */
-bit zero = off
-
-/* declaring and assigning a collection of bit types */
-bits mask = [ off, on, off, off, on, off ]
-
-/* defining a contract for a user type without implementation */
-contract shape
-    text id
-    number width
-    number height
-    number area()
-
-/* defining an implementation of a contract */
-square is shape
-    /* defining what happens when assigning to a user type */
-    square(number a, number b)
-        width = a
-        height = b
-        id = 'Square with `a` width and `b` height'
-
-    /* defining an implementation of a function from the contract */
-    number area()
-        return width * height
+/* logging the number that was assigned */
+io.information('Temperature set: `temperature`')
 ```
+
+It will produce output that looks like this:
+
+![A screenshot of console output of a simple L# program.](assets/simple-file-console-output.png)
 
 ## Run
 - Install lua
