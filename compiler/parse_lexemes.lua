@@ -4,16 +4,19 @@ local print_lexemes = require('debug.print_lexemes')
 local table_insert = table.insert
 
 ---Parses the `lexeme` then returns one or many [`Statements`](../models/statement.lua).
----@param lexeme Lexeme
+---@param lexeme Lexeme The [Lexemes](../models/lexeme.lua) to parse.
+---@param source_file_path string The L# source file that this statement originates from.
 ---@return Statement[]
-local function parse_lexeme(lexeme)
+local function parse_lexeme(lexeme, source_file_path)
     local statements = {}
     for token_type, tokens in pairs(lexeme) do
         if token_type == 'tokens' then
-            local token_statement = get_token_statement(tokens)
-            table_insert(statements, token_statement)
+            local token_statement = get_token_statement(tokens, lexeme.line_number, source_file_path)
+            if token_statement then
+                table_insert(statements, token_statement)
+            end
         elseif token_type == 'expressions' then
-            local expression_statements = get_expression_statements(tokens)
+            local expression_statements = get_expression_statements(tokens, lexeme.line_number, source_file_path)
             for _, expression in ipairs(expression_statements) do
                 table_insert(statements, expression)
             end
@@ -24,12 +27,13 @@ end
 
 ---Parses the [Lexemes](../models/lexeme.lua) and returns a collection of lists of executable [`Statements`](../models/statement.lua).
 ---@param lexemes Lexeme[] A collection of [Lexemes](../models/lexeme.lua) to parse.
+---@param source_file_path string The L# source file that this statement originates from.
 ---@return Statement[][]
-local function parse_lexemes(lexemes)
+local function parse_lexemes(lexemes, source_file_path)
     print_lexemes(lexemes)
     local statements_list = {}
-    for _, token in ipairs(lexemes) do
-        local statements = parse_lexeme(token)
+    for _, lexeme in ipairs(lexemes) do
+        local statements = parse_lexeme(lexeme, source_file_path)
         table_insert(statements_list, statements)
     end
     return statements_list
