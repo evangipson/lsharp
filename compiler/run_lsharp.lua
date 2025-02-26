@@ -10,11 +10,9 @@ local function run_lsharp(statements)
     LSharpState:reset()
 
     -- Execute all the statements that have been parsed
-    for _, statements_list in pairs(statements) do
-        for _, statement in pairs(statements_list) do
-            if type(statement.expression) == 'function' then
-                statement.expression()
-            end
+    for _, statements_list in ipairs(statements) do
+        for _, statement in ipairs(statements_list) do
+            statement.expression()
         end
     end
 end

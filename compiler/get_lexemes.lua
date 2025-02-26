@@ -10,9 +10,9 @@ local function get_lexemes(text)
     local line_count = 1
     for line in text:gmatch("[^\n]*") do
         local expressions = {}
-        for expression in line:gmatch('%S+[(]+.*[)]+') do
+        for expression in line:gmatch('%S+[(]+%s*.*%s*[)]+') do
             table_insert(expressions, expression)
-            line = line:gsub('%S+[(]+.*[)]+', '')
+            line = line:gsub('%S+[(]+%s*.*%s*[)]+', '')
         end
 
         local comments = {}

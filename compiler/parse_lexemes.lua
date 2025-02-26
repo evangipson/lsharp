@@ -9,19 +9,17 @@ local table_insert = table.insert
 ---@return Statement[]
 local function parse_lexeme(lexeme, source_file_path)
     local statements = {}
-    for token_type, tokens in pairs(lexeme) do
-        if token_type == 'tokens' then
-            local token_statement = get_token_statement(tokens, lexeme.line_number, source_file_path)
-            if token_statement then
-                table_insert(statements, token_statement)
-            end
-        elseif token_type == 'expressions' then
-            local expression_statements = get_expression_statements(tokens, lexeme.line_number, source_file_path)
-            for _, expression in ipairs(expression_statements) do
-                table_insert(statements, expression)
-            end
-        end
+
+    local token_statement = get_token_statement(lexeme.tokens, lexeme.line_number, source_file_path)
+    if token_statement then
+        table_insert(statements, token_statement)
     end
+
+    local expression_statements = get_expression_statements(lexeme.expressions, lexeme.line_number, source_file_path)
+    for _, expression in ipairs(expression_statements) do
+        table_insert(statements, expression)
+    end
+
     return statements
 end
 

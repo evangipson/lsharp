@@ -1,8 +1,8 @@
 /* declaring and assigning the text type */
-text phrase = "Hello, world!"
+text phrase = 'Hello, world!'
 
 /* declaring and assigning a collection of text types */
-texts phrases = [ "Hello", "world!" ]
+texts phrases = [ 'Hello', 'world!' ]
 
 /* declaring and assigning the number type */
 number temperature = 98.4

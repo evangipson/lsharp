@@ -27,10 +27,26 @@ local LSharpState = {
     end,
     ---Adds a variable into the `LSharpState` variables collection.
     ---@param self LSharpState
+    ---@param variable_type string
     ---@param variable_name string
     ---@param variable_value unknown
-    add_variable = function(self, variable_name, variable_value)
-        self.variables[variable_name] = variable_value
+    add_variable = function(self, variable_type, variable_name, variable_value)
+        self.variables[variable_name] = {
+            type = variable_type,
+            value = variable_value,
+        }
+    end,
+    ---Gets a variable from the `LSharpState` variables collection.
+    ---@param self any
+    ---@param variable_name any
+    ---@return string|nil, unknown
+    get_variable = function(self, variable_name)
+        if self.variables[variable_name] == nil then
+            return nil, nil
+        end
+        local type = self.variables[variable_name].type
+        local value = self.variables[variable_name].value
+        return type, value
     end,
     ---Adds a stack frame into the `LSharpState` stack.
     ---@param self LSharpState
@@ -68,11 +84,12 @@ local LSharpState = {
             break
         end
         if frame_has_variables then
-            error_message = error_message .. '\ncurrent frame: \n'
+            error_message = error_message .. '\ncurrent frame:'
             for k, v in pairs(self.stack.frames[self.stack.next].variables) do
                 error_message = error_message ..
-                    '\n\t\t' .. k .. ' = ' .. (type(v) == 'table' and 'collection' or tostring(v))
+                    '\n\t' .. k .. ' = ' .. (type(v) == 'table' and 'collection' or tostring(v))
             end
+            error_message = error_message .. '\n'
         end
 
         return error_message
