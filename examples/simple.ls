@@ -1,3 +1,4 @@
+/* grab the io library for it's logging functions */
 grab io
 
 /* A normal logging function */

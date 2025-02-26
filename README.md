@@ -11,9 +11,10 @@ If you're curious, you can read more about it in the [L# language spec](spec) in
 
 ## Syntax
 
-Here is a sample of a very simple L# file:
+Here is a sample of some [simple L# source code](./examples/simple.ls):
 
 ```lsharp
+/* grab the io library for it's logging functions */
 grab io
 
 /* A normal logging function */
